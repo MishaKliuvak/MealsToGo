@@ -5,7 +5,8 @@ import styled from "styled-components"
 
 const Title = styled(Text)`
   padding: ${props => props.theme.space[3]};
-  color: ${props => props.theme.colors.bg.primary};
+  color: ${props => props.theme.colors.ui.primary};
+  font-family: ${props => props.theme.fonts.body};
 `
 
 const RestaurantCardItem = styled(Card)`

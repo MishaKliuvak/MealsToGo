@@ -15,6 +15,7 @@ import {
   Oswald_400Regular
 } from '@expo-google-fonts/oswald'
 import { Lato_400Regular } from '@expo-google-fonts/lato'
+import { Ionicons } from '@expo/vector-icons'
 
 const Settings = () => <SafeArea><Text>Setting</Text></SafeArea>
 const Map = () => <SafeArea><Text>Map</Text></SafeArea>
@@ -33,13 +34,33 @@ export default function App() {
     <>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <Tab.Navigator>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ color, size }) => {
+                let iconName
+
+                if (route.name === 'Restaurants') {
+                  iconName = 'md-restaurant'
+                } else if (route.name === 'Settings') {
+                  iconName = 'md-settings'
+                } else if (route.name === 'Map') {
+                  iconName = 'md-map'
+                }
+
+                return <Ionicons name={iconName} size={size} color={color} />
+              },
+            })}
+            tabBarOptions={{
+              activeTintColor: 'tomato',
+              inactiveTintColor: 'gray',
+            }}
+          >
             <Tab.Screen name="Restaurants" component={RestaurantScreen} />
             <Tab.Screen name="Map" component={Map} />
             <Tab.Screen name="Settings" component={Settings} />
           </Tab.Navigator>
         </NavigationContainer>
-        <ExpoStatusBar style='auto' />
+
       </ThemeProvider>
     </>
   )

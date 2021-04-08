@@ -31,7 +31,7 @@ export const RestaurantCard = ({ restaurant = {} }) => {
         <Text variant='label'>{name}</Text>
         <Section>
           <Rating>
-            {ratingArray.map((rating, index) => <SvgXml key={index.toString()} xml={star} width={20} height={20}/> )}
+            {ratingArray.map((rating, index) => <SvgXml key={`star-${index.toString()}`} xml={star} width={20} height={20}/> )}
           </Rating>
           <SectionEnd>
             { isClosedTemporarily && (

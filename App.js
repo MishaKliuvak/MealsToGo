@@ -8,8 +8,6 @@ import { RestaurantScreen } from "./src/features/restaurants/screens/RestaurantS
 import { ThemeProvider } from 'styled-components/native'
 import { theme } from './src/infrastructure/theme'
 
-import { restaurantsRequest } from './src/services/restaurants/restaurantService'
-
 import {
   useFonts,
   Oswald_400Regular

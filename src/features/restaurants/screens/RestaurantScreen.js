@@ -35,7 +35,7 @@ export const RestaurantScreen = () => {
         renderItem={() => <Spacer position='bottom' size='large'>
           <RestaurantCard />
         </Spacer>}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.name.toString()}
       />
     </SafeArea>
   )

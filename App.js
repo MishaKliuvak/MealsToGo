@@ -3,9 +3,7 @@ import { Text } from 'react-native'
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar'
 import { RestaurantScreen } from "./src/features/restaurants/screens/RestaurantScreen"
-import { SafeArea } from "./src/features/restaurants/components/SafeArea"
 
 import { ThemeProvider } from 'styled-components/native'
 import { theme } from './src/infrastructure/theme'
@@ -17,14 +15,29 @@ import {
 import { Lato_400Regular } from '@expo-google-fonts/lato'
 import { Ionicons } from '@expo/vector-icons'
 
-const Settings = () => <SafeArea><Text>Setting</Text></SafeArea>
-const Map = () => <SafeArea><Text>Map</Text></SafeArea>
+const Tab = createBottomTabNavigator()
+
+const Settings = () => <Text>Setting</Text>
+
+const Map = () => <Text>Map</Text>
+
+const TAB_ICON = {
+  Restaurants: "md-restaurant",
+  Map: "md-map",
+  Settings: "md-settings",
+}
+
+const screenOptions = ({ route }) => {
+  const iconName = TAB_ICON[route.name]
+  return {
+    tabBarIcon: ({ size, color }) => <Ionicons name={iconName} size={size} color={color} />
+  }
+}
 
 export default function App() {
   const [oswaldLoaded] = useFonts({ Oswald_400Regular })
   const [latoLoaded] = useFonts({ Lato_400Regular })
 
-  const Tab = createBottomTabNavigator()
 
   if (!latoLoaded || !oswaldLoaded) {
     return null
@@ -35,21 +48,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <NavigationContainer>
           <Tab.Navigator
-            screenOptions={({ route }) => ({
-              tabBarIcon: ({ color, size }) => {
-                let iconName
-
-                if (route.name === 'Restaurants') {
-                  iconName = 'md-restaurant'
-                } else if (route.name === 'Settings') {
-                  iconName = 'md-settings'
-                } else if (route.name === 'Map') {
-                  iconName = 'md-map'
-                }
-
-                return <Ionicons name={iconName} size={size} color={color} />
-              },
-            })}
+            screenOptions={screenOptions}
             tabBarOptions={{
               activeTintColor: 'tomato',
               inactiveTintColor: 'gray',

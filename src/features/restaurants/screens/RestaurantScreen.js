@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, FlatList } from "react-native"
-import { SafeArea } from "../components/SafeArea"
 import { Searchbar } from "react-native-paper"
 import styled from 'styled-components'
 
@@ -19,7 +18,7 @@ const RestaurantList = styled(FlatList).attrs({
 
 export const RestaurantScreen = () => {
   return (
-    <SafeArea>
+    <>
       <SearchContainer>
         <Searchbar />
       </SearchContainer>
@@ -37,6 +36,6 @@ export const RestaurantScreen = () => {
         </Spacer>}
         keyExtractor={(item) => item.name}
       />
-    </SafeArea>
+    </>
   )
 }

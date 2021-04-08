@@ -23,6 +23,7 @@ const Loading = styled(ActivityIndicator)`
 
 const LoadingContainer = styled(View)`
   position: absolute;
+  z-index: 100;
   top: 50%;
   left: 50%;
 `

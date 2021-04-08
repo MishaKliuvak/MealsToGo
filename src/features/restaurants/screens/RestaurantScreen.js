@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import { RestaurantCard } from "../components/RestaurantCard"
 import { Spacer } from "../../../components/Spacer"
+import { SafeArea } from "../components/SafeArea"
 
 const SearchContainer = styled(View)`
   padding: ${props => props.theme.space[3]};
@@ -18,7 +19,7 @@ const RestaurantList = styled(FlatList).attrs({
 
 export const RestaurantScreen = () => {
   return (
-    <>
+    <SafeArea>
       <SearchContainer>
         <Searchbar />
       </SearchContainer>
@@ -36,6 +37,6 @@ export const RestaurantScreen = () => {
         </Spacer>}
         keyExtractor={(item) => item.name}
       />
-    </>
+    </SafeArea>
   )
 }

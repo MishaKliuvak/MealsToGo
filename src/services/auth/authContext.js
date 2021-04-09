@@ -27,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
     if (password !== repeatedPassword) {
       setError('Error: Password don`t match')
     }
-
+    setIsLoading(true)
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(u => {
         setIsLoading(false)

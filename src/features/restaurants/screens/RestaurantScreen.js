@@ -12,6 +12,7 @@ import { FavouritesContext } from "../../../services/favourites/favouritesContex
 import { Search } from "../components/Search"
 import { FavouritesBar } from "../../../components/FavouritesBar"
 import { RestaurantList } from "../components/RestaurantList"
+import { FadeInView } from "../../../components/animations/FadeAnimation"
 
 
 const Loading = styled(ActivityIndicator)`
@@ -60,7 +61,9 @@ export const RestaurantScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('RestaurantDetail', { restaurant: item })}
           >
             <Spacer position='bottom' size='large'>
-              <RestaurantCard restaurant={item}/>
+              <FadeInView>
+                <RestaurantCard restaurant={item}/>
+              </FadeInView>
             </Spacer>
           </TouchableOpacity>
         )

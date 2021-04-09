@@ -7,6 +7,7 @@ import { TouchableOpacity } from "react-native"
 import { Spacer } from "../../../components/Spacer"
 import { RestaurantCard } from "../../restaurants/components/RestaurantCard"
 import { RestaurantList } from "../../restaurants/components/RestaurantList"
+import { FadeInView } from "../../../components/animations/FadeAnimation"
 
 const NoFavouritesArea = styled(SafeArea)`
   align-items: center;
@@ -25,7 +26,9 @@ export const FavouritesScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('RestaurantDetail', { restaurant: item })}
           >
             <Spacer position='bottom' size='large'>
-              <RestaurantCard restaurant={item}/>
+              <FadeInView>
+                <RestaurantCard restaurant={item}/>
+              </FadeInView>
             </Spacer>
           </TouchableOpacity>
         )

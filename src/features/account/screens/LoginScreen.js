@@ -1,10 +1,17 @@
 import React, { useState, useContext } from 'react'
-import { AccountBackground, AccountContainer, AccountCover, AuthButton, AuthInput } from "../components/accountStyles"
+import {
+  AccountBackground,
+  AccountContainer,
+  AccountCover,
+  AuthButton,
+  AuthInput, ErrorContainer,
+  Title,
+} from "../components/accountStyles"
 import { Spacer } from "../../../components/Spacer"
 import { AuthContext } from "../../../services/auth/authContext"
 import { Text } from '../../../components/Text'
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { onLogin, error } = useContext(AuthContext)
@@ -12,6 +19,7 @@ export const LoginScreen = () => {
   return (
     <AccountBackground>
       <AccountCover />
+      <Title>Login</Title>
       <AccountContainer>
         <AuthInput
           label="E-mail"
@@ -36,7 +44,9 @@ export const LoginScreen = () => {
 
         { error && (
           <Spacer size='large'>
-            <Text variant='error'>{error}</Text>
+            <ErrorContainer>
+              <Text variant='error'>{error}</Text>
+            </ErrorContainer>
           </Spacer>
         ) }
 
@@ -50,6 +60,14 @@ export const LoginScreen = () => {
           </AuthButton>
         </Spacer>
       </AccountContainer>
+      <Spacer size='large'>
+        <AuthButton
+          mode="contained"
+          onPress={() => navigation.goBack() }
+        >
+          Back
+        </AuthButton>
+      </Spacer>
     </AccountBackground>
   )
 }

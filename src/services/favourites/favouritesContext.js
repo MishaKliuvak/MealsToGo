@@ -1,29 +1,33 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AuthContext } from "../auth/authContext"
 
 export const FavouritesContext = createContext()
 
 export const FavouritesContextProvider = ({ children }) => {
-  const [favourites, setFavourites] = useState([])
+  const { user } = useContext(AuthContext)
 
-  const saveFavourites = async (value) => {
+  const [favourites, setFavourites] = useState([]);
+
+  const saveFavourites = async (value, uid) => {
     try {
-      await AsyncStorage.setItem('@favourites', JSON.stringify(value))
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem(`@favourites-${uid}`, jsonValue);
     } catch (e) {
-      console.log(e)
+      console.log("error storing", e);
     }
-  }
+  };
 
-  const loadFavourites = async (value) => {
+  const loadFavourites = async (uid) => {
     try {
-      const value = await AsyncStorage.getItem('@favourites')
-      if(value !== null) {
-        setFavourites(JSON.parse(value))
+      const value = await AsyncStorage.getItem(`@favourites-${uid}`);
+      if (value !== null) {
+        setFavourites(JSON.parse(value));
       }
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log("error loading", e);
     }
-  }
+  };
 
   const add = (restaurant) => {
     setFavourites([...favourites, restaurant])
@@ -35,12 +39,16 @@ export const FavouritesContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    saveFavourites(favourites)
-  }, [favourites])
+    if (user && user.uid) {
+      loadFavourites(user.uid);
+    }
+  }, [user]);
 
   useEffect(() => {
-    loadFavourites()
-  }, [])
+    if (user && user.uid && favourites.length) {
+      saveFavourites(favourites, user.uid);
+    }
+  }, [favourites, user]);
 
   return (
     <FavouritesContext.Provider value={{ favourites, addToFavourites: add, removeFromFavourites: remove }}>

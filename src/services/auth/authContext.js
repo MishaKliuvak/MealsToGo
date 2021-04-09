@@ -10,6 +10,19 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [error, setError] = useState(null)
 
+  firebase.auth().onAuthStateChanged(usr => {
+    if (usr) {
+      setUser(usr)
+    }
+
+    setIsLoading(false)
+  })
+
+  const onLogout = () => {
+    setUser(null)
+    firebase.auth().signOut()
+  }
+
   const onLogin = (email, password) => {
     setIsLoading(true)
     loginRequest(email, password)
@@ -40,7 +53,7 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuth: !!user, user, isLoading, error, onLogin, onRegister  }}>
+    <AuthContext.Provider value={{ isAuth: !!user, user, isLoading, error, onLogin, onRegister, onLogout }}>
       {children}
     </AuthContext.Provider>
   )

@@ -3,10 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { ThemeProvider } from 'styled-components/native'
 import { theme } from './src/infrastructure/theme'
 
-import { RestaurantContextProvider } from "./src/services/restaurants/restaurantContext"
-import { LocationContextProvider } from "./src/services/location/locationContext"
-import { FavouritesContextProvider } from "./src/services/favourites/favouritesContext"
-
 import {
   useFonts,
   Oswald_400Regular
@@ -42,13 +38,7 @@ export default function App() {
     <>
       <ThemeProvider theme={theme}>
         <AuthContextProvider>
-          <FavouritesContextProvider>
-            <LocationContextProvider>
-              <RestaurantContextProvider>
-                <Navigation />
-              </RestaurantContextProvider>
-            </LocationContextProvider>
-          </FavouritesContextProvider>
+          <Navigation />
         </AuthContextProvider>
       </ThemeProvider>
     </>

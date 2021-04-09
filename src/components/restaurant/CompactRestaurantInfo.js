@@ -3,13 +3,14 @@ import styled from 'styled-components/native'
 import { Text } from '../Text'
 import { Platform } from 'react-native'
 import WebView from "react-native-webview"
+import { Card } from "react-native-paper"
 
 const CompactImage = styled.Image`
   border-radius: 10px;
   width: 120px;
   height: 100px;
 `
-const CompactWebView = styled(WebView)`
+const CompactWebView = styled(Card.Cover)`
   border-radius: 10px;
   width: 120px;
   height: 100px;
@@ -28,8 +29,16 @@ export const CompactRestaurantInfo = ({ restaurant }) => {
 
   return (
     <Item>
-      <Image source={{ uri: restaurant.photos[0] }}/>
-      <Text variant='caption' center numberOfLines={3}>
+      <Image
+        source={{ uri: restaurant.photos[0] }}
+        javaScriptEnabled
+        domStorageEnabled
+        allowFileAccessFromFileURLs
+        startInLoadingState
+        originWhitelist={['*']}
+        mixedContentMode="compatibility"
+      />
+      <Text variant='body' center numberOfLines={3}>
         {restaurant.name}
       </Text>
     </Item>

@@ -1,34 +1,37 @@
 import React from 'react'
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar'
-import { StatusBar, StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import { Searchbar } from 'react-native-paper'
+
+import { ThemeProvider } from 'styled-components/native'
+import { theme } from './src/infrastructure/theme'
+
+import { RestaurantContextProvider } from "./src/services/restaurants/restaurantContext"
+import { LocationContextProvider } from "./src/services/location/locationContext"
+
+import {
+  useFonts,
+  Oswald_400Regular
+} from '@expo-google-fonts/oswald'
+import { Lato_400Regular } from '@expo-google-fonts/lato'
+import { Navigator } from "./src/infrastructure/navigation/Navigator"
 
 export default function App() {
+  const [oswaldLoaded] = useFonts({ Oswald_400Regular })
+  const [latoLoaded] = useFonts({ Lato_400Regular })
+
+  if (!latoLoaded || !oswaldLoaded) {
+    return null
+  }
+
   return (
     <>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.search}>
-          <Searchbar />
-        </View>
-        <View style={styles.list}>
-          <Text>List</Text>
-        </View>
-      </SafeAreaView>
-      <ExpoStatusBar style='auto' />
+      <ThemeProvider theme={theme}>
+        <LocationContextProvider>
+          <RestaurantContextProvider>
+            <Navigator />
+          </RestaurantContextProvider>
+        </LocationContextProvider>
+      </ThemeProvider>
     </>
   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight,
-  },
-  search: {
-    padding: 16,
-  },
-  list: {
-    flex: 1,
-    padding: 16,
-  }
-})
+

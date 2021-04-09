@@ -12,10 +12,10 @@ import {
   Oswald_400Regular
 } from '@expo-google-fonts/oswald'
 import { Lato_400Regular } from '@expo-google-fonts/lato'
-import { Navigator } from "./src/infrastructure/navigation/Navigator"
 
 import * as firebase from 'firebase'
 import { AuthContextProvider } from "./src/services/auth/authContext"
+import { Navigation } from "./src/infrastructure/navigation"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBElmyln4Fzm4ya2BX1w0a6KIevH9HzQO0",
@@ -45,7 +45,7 @@ export default function App() {
           <FavouritesContextProvider>
             <LocationContextProvider>
               <RestaurantContextProvider>
-                <Navigator />
+                <Navigation />
               </RestaurantContextProvider>
             </LocationContextProvider>
           </FavouritesContextProvider>

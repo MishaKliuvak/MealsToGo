@@ -12,12 +12,36 @@ const Map = styled(MapView)`
 
 export const MapScreen = () => {
   const { location } = useContext(LocationContext)
+  const { viewport, lat, lng } = location
   const { restaurants = [] } = useContext(RestaurantContext)
+  const [latDelta, setLatDelta] = useState(0)
+
+
+  useEffect(() => {
+    if (viewport) {
+      const northeastLat = viewport.northeast.lat
+      const southwestLat = viewport.northeast.lat
+
+      setLatDelta(northeastLat - southwestLat)
+    }
+
+
+  }, [location])
+
   return (
     <>
       <Search />
-      <Map>
-
+      <Map
+        region={{
+          latitude: lat,
+          longitude: lng,
+          latitudeDelta: latDelta,
+          longitudeDelta: 0.02
+        }}
+      >
+        {restaurants.map(restaurant => {
+          return null
+        })}
       </Map>
     </>
   )

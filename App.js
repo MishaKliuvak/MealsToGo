@@ -3,18 +3,15 @@ import React, { useState, useEffect } from 'react'
 import { ThemeProvider } from 'styled-components/native'
 import { theme } from './src/infrastructure/theme'
 
-import { RestaurantContextProvider } from "./src/services/restaurants/restaurantContext"
-import { LocationContextProvider } from "./src/services/location/locationContext"
-import { FavouritesContextProvider } from "./src/services/favourites/favouritesContext"
-
 import {
   useFonts,
   Oswald_400Regular
 } from '@expo-google-fonts/oswald'
 import { Lato_400Regular } from '@expo-google-fonts/lato'
-import { Navigator } from "./src/infrastructure/navigation/Navigator"
 
 import * as firebase from 'firebase'
+import { AuthContextProvider } from "./src/services/auth/authContext"
+import { Navigation } from "./src/infrastructure/navigation"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBElmyln4Fzm4ya2BX1w0a6KIevH9HzQO0",
@@ -30,21 +27,6 @@ if (!firebase.apps.length) {
 }
 
 export default function App() {
-  const [auth, setAuth] = useState(false)
-
-  useEffect(() => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword("mishaklyuvak10@gmail.com", "123456")
-      .then(user => {
-        console.log(user)
-        setAuth(true)
-      })
-      .catch(e => {
-        console.log(e)
-      })
-  }, [])
-
   const [oswaldLoaded] = useFonts({ Oswald_400Regular })
   const [latoLoaded] = useFonts({ Lato_400Regular })
 
@@ -52,18 +34,12 @@ export default function App() {
     return null
   }
 
-  if (!auth) return null
-
   return (
     <>
       <ThemeProvider theme={theme}>
-        <FavouritesContextProvider>
-          <LocationContextProvider>
-            <RestaurantContextProvider>
-              <Navigator />
-            </RestaurantContextProvider>
-          </LocationContextProvider>
-        </FavouritesContextProvider>
+        <AuthContextProvider>
+          <Navigation />
+        </AuthContextProvider>
       </ThemeProvider>
     </>
   )

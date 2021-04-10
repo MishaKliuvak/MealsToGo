@@ -11,13 +11,9 @@ import { RestaurantContext } from "../../../services/restaurants/restaurantConte
 import { FavouritesContext } from "../../../services/favourites/favouritesContext"
 import { Search } from "../components/Search"
 import { FavouritesBar } from "../../../components/FavouritesBar"
+import { RestaurantList } from "../components/RestaurantList"
+import { FadeInView } from "../../../components/animations/FadeAnimation"
 
-
-const RestaurantList = styled(FlatList).attrs({
-  contentContainerStyle: {
-    padding: 16
-  }
-})``
 
 const Loading = styled(ActivityIndicator)`
   margin-left: -25px;
@@ -65,7 +61,9 @@ export const RestaurantScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('RestaurantDetail', { restaurant: item })}
           >
             <Spacer position='bottom' size='large'>
-              <RestaurantCard restaurant={item}/>
+              <FadeInView>
+                <RestaurantCard restaurant={item}/>
+              </FadeInView>
             </Spacer>
           </TouchableOpacity>
         )
